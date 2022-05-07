@@ -19,3 +19,41 @@ model Usser {
 
   name String
 }
+
+model Categorias {
+  id Int @id @default(autoincrement())
+
+  nome String @unique
+
+  createdAt DateTime
+
+  pratos Pratos[]
+
+}
+
+model Pratos {
+
+  id Int @id @default(autoincrement())
+  
+  nome String
+  descricao String
+  preco Float
+
+  categoria Categorias @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+
+  createdAt DateTime 
+  
+}
+
+model Ingredientes {
+
+  id Int @id @default(autoincrement())
+
+  nome String @unique
+  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+}
