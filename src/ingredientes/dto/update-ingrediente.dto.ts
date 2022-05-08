@@ -3,6 +3,5 @@ import { CreateIngredienteDto } from './create-ingrediente.dto';
 
 export class UpdateIngredienteDto extends PartialType(CreateIngredienteDto) {
 
-nome: string;
 
 }

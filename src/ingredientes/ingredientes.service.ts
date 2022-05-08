@@ -30,16 +30,18 @@ export class IngredientesService {
   }
 
   findOne(id: number) {
-    return this.prisma.ingredientes.findFirst({ where: { id } });
- //   return `This action returns a #${id} ingrediente`;
-  }
+    return this.prisma.ingredientes.findUnique({ where: { id } });
+   }
 
-  update(id: number, updateIngredienteDto: UpdateIngredienteDto) {
-    console.log(updateIngredienteDto);
-    return `This action updates a #${id} ingrediente`;
+  update(id: number, data: UpdateIngredienteDto) {
+    console.log(data);
+    return this.prisma.ingredientes.update(
+      { where : {id},
+      data
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} ingrediente`;
+    return this.prisma.ingredientes.delete( { where : { id }});
   }
 }
