@@ -49,10 +49,7 @@ model Pratos {
 model Ingredientes {
 
   id Int @id @default(autoincrement())
-
   nome String @unique
-  
-
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
