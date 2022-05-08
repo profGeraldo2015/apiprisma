@@ -7,19 +7,14 @@ import { UpdateIngredienteDto } from './dto/update-ingrediente.dto';
 export class IngredientesController {
   constructor(private readonly ingredientesService: IngredientesService) { }
 
-
-  //create(@Body() createIngredienteDto: CreateIngredienteDto) {
   @Post()
   create(@Body() createIngredienteDto: CreateIngredienteDto) {
-    console.log('entrei aqui');
-    console.log(createIngredienteDto);
     return this.ingredientesService.create(createIngredienteDto);
-    //return 'teste';
+   
   }
 
   @Get()
   findAll() {
-    console.log('entrei aqui busca toods');
     return this.ingredientesService.findAll();
   }
 

@@ -22,10 +22,9 @@ model Usser {
 
 model Categorias {
   id Int @id @default(autoincrement())
-
   nome String @unique
-
-  createdAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   pratos Pratos[]
 
@@ -34,7 +33,6 @@ model Categorias {
 model Pratos {
 
   id Int @id @default(autoincrement())
-  
   nome String
   descricao String
   preco Float
@@ -42,8 +40,9 @@ model Pratos {
   categoria Categorias @relation(fields: [categoriaId], references: [id])
   categoriaId Int
 
-  createdAt DateTime 
-  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
 }
 
 model Ingredientes {
