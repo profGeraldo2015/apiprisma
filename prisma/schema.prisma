@@ -6,10 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 
 model Usser {
   id Int @id @default(autoincrement())
@@ -21,24 +20,29 @@ model Usser {
 }
 
 model Categorias {
-  id Int @id @default(autoincrement())
-  nome String @unique
+  id        Int      @id @default(autoincrement())
+  nome      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  pratos Pratos[]
+  produtos Produtos[]
 
 }
 
-model Pratos {
+model Produtos {
 
   id Int @id @default(autoincrement())
-  nome String
-  descricao String
-  preco Float
 
-  categoria Categorias @relation(fields: [categoriaId], references: [id])
+  nome      String
+  descricao String
+  preco     Float
+
+  categoria   Categorias @relation(fields: [categoriaId], references: [id])
   categoriaId Int
+
+  ingrediente Ingredientes[]
+  comandas    Comandas[]
+  cardapio    Cardapio?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -47,8 +51,56 @@ model Pratos {
 
 model Ingredientes {
 
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  nome      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  produtos Produtos[]
+
+}
+
+model Mesas {
+  id        Int      @id @default(autoincrement())
+  descricao String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comandas Comandas[]
+}
+
+model Garcom {
+  id   Int    @id @default(autoincrement())
   nome String @unique
+
+  comandas Comandas[]
+}
+
+model Comandas {
+  id Int @id @default(autoincrement())
+  
+  mesa     Mesas  @relation(fields: [mesaId], references: [id])
+  mesaId   Int
+  garcom   Garcom @relation(fields: [garcomId], references: [id])
+  garcomId Int
+  produtos  Produtos @relation(fields: [produtoId], references: [id])
+  produtoId Int @unique
+  quantidade Int
+  valor      Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Cardapio {
+  id Int @id @default(autoincrement())
+
+  nome      String @unique
+  descricao String
+  preco     Float
+
+  produtos Produtos @relation(fields: [produtoId], references: [id])
+  produtoId Int @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateIngredienteDto } from './dto/create-ingrediente.dto';
 import { UpdateIngredienteDto } from './dto/update-ingrediente.dto';
+import { ResultadoDto } from './dto/resultado.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Ingredientes, Prisma } from '@prisma/client';
 
@@ -11,7 +12,18 @@ export class IngredientesService {
   }
 
   create(createIngredienteDto: CreateIngredienteDto) {
-    return this.prisma.ingredientes.create( { data : createIngredienteDto } );
+    return this.prisma.ingredientes.create( { data : createIngredienteDto } )
+    .then((result)=>{
+      return <ResultadoDto>{
+        status: true,
+        mensagem: "Gravado com sucesso"
+      }
+    })
+    .catch((error)=>{
+      return <ResultadoDto>{
+        status: false,
+        mensagem: "Erro..."
+    }});
   }
 
   findAll() {
