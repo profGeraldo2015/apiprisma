@@ -14,7 +14,28 @@ export class ProdutoService {
   
 
   create(createProdutoDto: CreateProdutoDto) {
-    return 'This action adds a new produto';
+
+console.log(createProdutoDto);
+    
+    //return createProdutoDto;//'This action adds a new produto';
+
+    return this.prisma.produtos.create( { data : createProdutoDto } )
+    .then((result)=>{
+      return <ResultadoDto>{
+        status: true,
+        mensagem: "Gravado com sucesso"
+      }
+    })
+    .catch((error)=>{
+      console.log(error);
+      return <ResultadoDto>{
+        status: false,
+        mensagem: "Erro..."
+    }});
+
+
+
+
   }
 
   findAll() {

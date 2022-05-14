@@ -35,7 +35,7 @@ model Produtos {
 
   nome      String
   descricao String
-  preco     Float
+  preco     Decimal
 
   categoria   Categorias @relation(fields: [categoriaId], references: [id])
   categoriaId Int
