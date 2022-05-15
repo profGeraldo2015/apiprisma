@@ -1,7 +1,6 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsString, IsDate , IsArray,IsNumber, IsOptional } from 'class-validator';
 
-
-export class CreateProdutoDto {
+export class CreateProdutoDto2 {
     @IsString()
     nome:      string;
     @IsString()
@@ -10,6 +9,8 @@ export class CreateProdutoDto {
     preco:    number;
     @IsNumber()
     categoriaId: number;
+    @IsArray()
+    ingrediente: [];
     @IsDate()
     @IsOptional()
     createdAt?: Date;

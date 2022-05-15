@@ -66,7 +66,7 @@ model Mesas {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  comandas Comandas[]
+  mesascomandas MesasComandas[]
 }
 
 model Garcom {
@@ -79,8 +79,8 @@ model Garcom {
 model Comandas {
   id Int @id @default(autoincrement())
   
-  mesa     Mesas  @relation(fields: [mesaId], references: [id])
-  mesaId   Int
+  mesascomandas MesasComandas[]
+
   garcom   Garcom @relation(fields: [garcomId], references: [id])
   garcomId Int
   produtos  Produtos @relation(fields: [produtoId], references: [id])
@@ -89,6 +89,16 @@ model Comandas {
   valor      Float
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+}
+
+model mesascomandas{
+
+  id Int @id @default(uuid())
+  mesasId Int
+  mesa Mesas @relation(fields: [mesasId], references:[id])
+  comandasId Int
+  comandas Comandas @relation(fields: [comandasId], references:[id])
+
 }
 
 model Cardapio {

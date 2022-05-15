@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CreateProdutoDto } from './dto/create-produto.dto';
+import { CreateProdutoDto2 } from './dto/create.dto';
+
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 
 @Controller('produto')
@@ -10,6 +12,11 @@ export class ProdutoController {
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);
+  }
+
+  @Post('/add')
+  create2(@Body() createProdutoDto2: CreateProdutoDto2) {
+    return this.produtoService.create2(createProdutoDto2);
   }
 
   @Get()
