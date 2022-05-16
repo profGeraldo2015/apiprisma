@@ -61,12 +61,17 @@ model Ingredientes {
 }
 
 model Mesas {
-  id        Int      @id @default(autoincrement())
-  descricao String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id            Int             @id @default(autoincrement())
+  descricao     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  status        Status          @default(value: VAZIA)
   mesascomandas MesasComandas[]
+}
+
+enum Status {
+  VAZIA
+  OCUPADA
 }
 
 model Garcom {
@@ -78,38 +83,49 @@ model Garcom {
 
 model Comandas {
   id Int @id @default(autoincrement())
-  
+
   mesascomandas MesasComandas[]
 
-  garcom   Garcom @relation(fields: [garcomId], references: [id])
-  garcomId Int
-  produtos  Produtos @relation(fields: [produtoId], references: [id])
-  produtoId Int @unique
+  garcom     Garcom   @relation(fields: [garcomId], references: [id])
+  garcomId   Int
+  produtos   Produtos @relation(fields: [produtoId], references: [id])
+  produtoId  Int      @unique
   quantidade Int
-  valor      Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  valor      Decimal
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  entrada    DateTime
+  producao   DateTime
+  saida      DateTime
+  statusC    StatusC  @default(value: AGUARDANDO)
+
 }
 
-model mesascomandas{
+enum StatusC {
+  AGUARDANDO
+  PRODUZINDO
+  ENTREGUE
+}
 
-  id Int @id @default(uuid())
-  mesasId Int
-  mesa Mesas @relation(fields: [mesasId], references:[id])
+model MesasComandas {
+
+  id         Int      @id @default(autoincrement())
+  mesasId    Int
+  mesa       Mesas    @relation(fields: [mesasId], references: [id])
   comandasId Int
-  comandas Comandas @relation(fields: [comandasId], references:[id])
+  comandas   Comandas @relation(fields: [comandasId], references: [id])
 
 }
 
 model Cardapio {
-  id Int @id @default(autoincrement())
 
-  nome      String @unique
-  descricao String
-  preco     Float
+  id        Int      @id @default(autoincrement())
+  nome      String   @unique
+  descricao String?
+  preco     Decimal
 
-  produtos Produtos @relation(fields: [produtoId], references: [id])
-  produtoId Int @unique
+  produtos  Produtos @relation(fields: [produtoId], references: [id])
+  produtoId Int      @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
