@@ -15,7 +15,16 @@ export class MesasService {
   }
 
   findAll() {
-    return this.prisma.mesas.findMany();
+    return this.prisma.mesas.findMany({ 
+
+      include:{
+        mesascomandas:{
+          select: {
+            comandasId:true,
+          },
+        },
+      },
+    });
   }
 
   findOne(id: number) {

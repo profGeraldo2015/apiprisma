@@ -9,6 +9,7 @@ export class ComandasController {
 
   @Post()
   create(@Body() createComandaDto: CreateComandaDto) {
+    console.log(createComandaDto);
     return this.comandasService.create(createComandaDto);
   }
 

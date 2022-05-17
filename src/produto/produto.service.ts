@@ -35,36 +35,16 @@ export class ProdutoService {
   }
 
   create2(createProdutoDto2: CreateProdutoDto2) {
-
-    console.log(createProdutoDto2.ingrediente);
-
-    //this.prisma._IngredientesToProdutos.create({ data: createProdutoDto2.ingredientes });
-
-    //return createProdutoDto;//'This action adds a new produto';
-    createProdutoDto2.ingrediente.map(x => console.log(x));
-
     return this.prisma.produtos.create({
-
       data: {
-        
-           
              nome : createProdutoDto2.nome,
              descricao: createProdutoDto2.descricao,
              preco: createProdutoDto2.preco,
              categoriaId :createProdutoDto2.categoriaId,
-          
-        
-
-        //ingrediente: {
-        //  connect: createProdutoDto2.ingrediente,
-        //},
       },
-    
     }).then((result) => {
       console.log(result);
-      //this.prisma._IngredientesToProdutos.create({
-      //  data:{produto: {connect: {id: result.id}}, ingrediente: {connect: {id: createProdutoDto.ingrediente}}},
-      //});
+
       return <ResultadoDto>{
         status: true,
         mensagem: "Gravado com sucesso"

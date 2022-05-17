@@ -35,7 +35,7 @@ model Produtos {
 
   nome      String
   descricao String
-  preco     Decimal
+  preco     Decimal?
 
   categoria   Categorias @relation(fields: [categoriaId], references: [id])
   categoriaId Int
@@ -61,7 +61,7 @@ model Ingredientes {
 }
 
 model Mesas {
-  id            Int             @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   descricao     String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -82,21 +82,23 @@ model Garcom {
 }
 
 model Comandas {
-  id Int @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
+
+  numeroMesa Int
 
   mesascomandas MesasComandas[]
 
   garcom     Garcom   @relation(fields: [garcomId], references: [id])
   garcomId   Int
   produtos   Produtos @relation(fields: [produtoId], references: [id])
-  produtoId  Int      @unique
+  produtoId  Int
   quantidade Int
-  valor      Decimal
+  valor      Decimal?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
-  entrada    DateTime
-  producao   DateTime
-  saida      DateTime
+  entrada    DateTime @default(now())
+  producao   DateTime @default(now())
+  saida      DateTime @default(now())
   statusC    StatusC  @default(value: AGUARDANDO)
 
 }
@@ -110,8 +112,10 @@ enum StatusC {
 model MesasComandas {
 
   id         Int      @id @default(autoincrement())
+
   mesasId    Int
   mesa       Mesas    @relation(fields: [mesasId], references: [id])
+  
   comandasId Int
   comandas   Comandas @relation(fields: [comandasId], references: [id])
 
@@ -119,8 +123,8 @@ model MesasComandas {
 
 model Cardapio {
 
-  id        Int      @id @default(autoincrement())
-  nome      String   @unique
+  id        Int     @id @default(autoincrement())
+  nome      String  @unique
   descricao String?
   preco     Decimal
 
