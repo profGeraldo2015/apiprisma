@@ -65,6 +65,7 @@ export class ProdutoService {
       include: {
         ingrediente: {
           select: {
+            id:true,
             nome: true,
           },
         },
@@ -88,6 +89,7 @@ export class ProdutoService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} produto`;
+    
+    return this.prisma.produtos.delete( { where : { id }});
   }
 }

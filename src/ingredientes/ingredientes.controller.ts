@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { IngredientesService } from './ingredientes.service';
 import { CreateIngredienteDto } from './dto/create-ingrediente.dto';
 import { UpdateIngredienteDto } from './dto/update-ingrediente.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('ingredientes')
 @Controller('ingredientes')
 export class IngredientesController {
   constructor(private readonly ingredientesService: IngredientesService) { }
@@ -33,3 +35,7 @@ export class IngredientesController {
     return this.ingredientesService.remove(+id);
   }
 }
+function ApiUseTags(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
